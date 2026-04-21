@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ onGetStartedClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -14,6 +14,13 @@ export default function Navbar() {
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
+
+  const handleSignInClick = () => {
+    if (onGetStartedClick) {
+      onGetStartedClick();
+    }
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-light shadow-md sticky top-0 z-50">
@@ -39,7 +46,10 @@ export default function Navbar() {
 
           {/* Sign In Button and Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block btn-primary">
+            <button 
+              onClick={handleSignInClick}
+              className="hidden md:block btn-primary"
+            >
               Sign In
             </button>
 
@@ -71,7 +81,10 @@ export default function Navbar() {
                   {item.name}
                 </a>
               ))}
-              <button className="btn-primary w-full mt-2">
+              <button 
+                onClick={handleSignInClick}
+                className="btn-primary w-full mt-2"
+              >
                 Sign In
               </button>
             </div>
