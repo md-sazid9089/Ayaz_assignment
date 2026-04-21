@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-export default function SignIn({ onSignInSuccess }) {
+export default function SignIn({ onSignInSuccess, onNavigateToSignUp }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -9,7 +9,6 @@ export default function SignIn({ onSignInSuccess }) {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
 
   // Email validation regex
   const validateEmail = (email) => {
@@ -222,7 +221,7 @@ export default function SignIn({ onSignInSuccess }) {
             <p className="text-primary text-opacity-70">
               Don't have an account?{' '}
               <button
-                onClick={() => setShowSignUp(true)}
+                onClick={onNavigateToSignUp}
                 className="font-bold text-accent hover:text-primary transition-all duration-300 cursor-pointer"
               >
                 Sign up

@@ -1,0 +1,50 @@
+.git
+.gitignore
+node_modules
+npm-debug.log
+.DS_Store
+.env.local
+.env.*.local
+.git/
+.cache/
+.tern-port
+*.pem
+yarn-error.log
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Documentation files (not needed for deployment)
+*.md
+/docs
+/guides
+
+# Test files (not needed for production)
+/__tests__
+/__test__
+/test
+/tests
+*.test.js
+*.spec.js
+
+# Development files
+.env.development
+.env.development.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Source maps (production doesn't need)
+*.map
+
+# Vite temp files
+.vite/
