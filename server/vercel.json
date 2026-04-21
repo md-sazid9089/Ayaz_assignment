@@ -1,0 +1,57 @@
+{
+  "version": 2,
+  "buildCommand": "npm install && npm run prisma:generate && npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "devCommand": "npm run dev",
+  "env": {
+    "DATABASE_URL": {
+      "description": "MySQL database connection string",
+      "required": true
+    },
+    "JWT_SECRET": {
+      "description": "JWT secret key for authentication",
+      "required": true
+    },
+    "FIRECRAWL_API_KEY": {
+      "description": "Firecrawl API key for web scraping",
+      "required": true
+    },
+    "RESEND_API_KEY": {
+      "description": "Resend API key for email service",
+      "required": true
+    },
+    "ADMIN_API_KEY": {
+      "description": "Admin API key for protected endpoints",
+      "required": true
+    },
+    "FROM_EMAIL": {
+      "description": "Email sender address",
+      "required": true
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=3600" }
+      ]
+    }
+  ],
+  "functions": {
+    "api/**": {
+      "maxDuration": 60
+    }
+  }
+}

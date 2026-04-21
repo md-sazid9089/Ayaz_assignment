@@ -1,0 +1,65 @@
+// This is your Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - stores user account information
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String    // Will store hashed password
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  trackedProducts TrackedProduct[]
+
+  @@map("users")
+}
+
+// TrackedProduct model - stores products a user is tracking
+model TrackedProduct {
+  id            String    @id @default(cuid())
+  userId        String
+  productUrl    String
+  productTitle  String?
+  productImage  String?   // URL to product image
+  currentPrice  Float
+  targetPrice   Float
+  currency      String    @default("USD")
+  alertSent     Boolean   @default(false) // Flag to avoid duplicate alerts
+  lastAlertSentAt DateTime? // Timestamp of last alert to track when alert was sent
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  priceHistory  PriceHistory[]
+
+  // Constraint: one user can only track one URL once
+  @@unique([userId, productUrl])
+  @@index([userId])
+  @@map("tracked_products")
+}
+
+// PriceHistory model - stores historical price records for each product
+model PriceHistory {
+  id                String    @id @default(cuid())
+  trackedProductId  String
+  price             Float
+  checkedAt         DateTime  @default(now())
+
+  // Relations
+  trackedProduct    TrackedProduct @relation(fields: [trackedProductId], references: [id], onDelete: Cascade)
+
+  @@index([trackedProductId])
+  @@map("price_history")
+}
