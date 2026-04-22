@@ -176,5 +176,3 @@ const ProductPriceHistory = ({
 };
 
 export default ProductPriceHistory;
-
-export default ProductPriceHistory;
