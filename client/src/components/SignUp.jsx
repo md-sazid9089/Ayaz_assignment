@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, TrendingDown, ArrowRight, User, Mail, Lock, ChevronLeft } from 'lucide-react';
 
 export default function SignUp({ onSignUpSuccess, onNavigateToSignIn }) {
   const [formData, setFormData] = useState({
@@ -14,297 +14,174 @@ export default function SignUp({ onSignUpSuccess, onNavigateToSignIn }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Email validation regex
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: '',
-      }));
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
-  // Validate form
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
-    } else if (formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Full name must be at least 2 characters';
-    }
-
-    if (!formData.email) {
-      newErrors.email = 'Email address is required';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Handle form submission
   const handleSignUp = async (e) => {
     e.preventDefault();
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    else if (!validateEmail(formData.email)) newErrors.email = 'Invalid email';
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6) newErrors.password = 'Min 6 characters';
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords mismatch';
 
-    if (!validateForm()) {
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
     setIsLoading(true);
-
-    // Simulate network delay
     setTimeout(() => {
       setIsLoading(false);
-      if (onSignUpSuccess) {
-        onSignUpSuccess({
-          fullName: formData.fullName,
-          email: formData.email,
-        });
-      }
-      // Reset form
-      setFormData({
-        fullName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
+      if (onSignUpSuccess) onSignUpSuccess({ fullName: formData.fullName, email: formData.email });
     }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-light flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
-        {/* Sign Up Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">
-              Create Your Account
-            </h1>
-            <p className="text-primary text-opacity-60 text-lg">
-              Sign up to start tracking your favorite product prices.
+    <div className="min-h-screen bg-[#F5EDEC] flex items-center justify-center px-6 py-12 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#F7B9C4] rounded-full blur-[120px] opacity-20 -translate-y-1/2 -translate-x-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#533638] rounded-full blur-[120px] opacity-10 translate-y-1/2 translate-x-1/2"></div>
+
+      <div className="w-full max-w-[520px] relative z-10">
+        <div className="bg-white rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(83,54,56,0.12)] border border-[#533638]/5 p-10 md:p-14 overflow-hidden relative group">
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#F7B9C4] via-[#533638] to-[#F7B9C4]"></div>
+          
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[#533638] rounded-2xl flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <TrendingDown size={28} className="text-[#F7B9C4]" />
+              </div>
+              <span className="text-3xl font-black text-[#533638] tracking-tighter font-['Outfit']">PEPTA</span>
+            </div>
+            <h1 className="text-4xl font-black text-[#533638] mb-3 font-['Outfit']">Initialize Account</h1>
+            <p className="text-[#533638]/40 font-bold uppercase tracking-widest text-[10px]">
+              Join the elite price monitoring network
             </p>
           </div>
 
-          {/* Sign Up Form */}
           <form onSubmit={handleSignUp} className="space-y-5">
-            {/* Full Name Input */}
-            <div>
-              <label htmlFor="fullName" className="block text-sm font-semibold text-primary mb-2">
-                Full Name
-              </label>
-              <input
-                id="fullName"
-                type="text"
-                name="fullName"
-                placeholder="John Doe"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-3 rounded-lg border-2 font-medium text-primary placeholder-primary placeholder-opacity-40 transition-all duration-300 focus:outline-none ${
-                  errors.fullName
-                    ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                    : 'border-light hover:border-accent focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20'
-                }`}
-              />
-              {errors.fullName && (
-                <p className="text-red-500 text-sm mt-2 font-medium animate-fadeIn">
-                  {errors.fullName}
-                </p>
-              )}
-            </div>
-
-            {/* Email Input */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-3 rounded-lg border-2 font-medium text-primary placeholder-primary placeholder-opacity-40 transition-all duration-300 focus:outline-none ${
-                  errors.email
-                    ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                    : 'border-light hover:border-accent focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20'
-                }`}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-2 font-medium animate-fadeIn">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            {/* Password Input */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-primary mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border-2 font-medium text-primary placeholder-primary placeholder-opacity-40 transition-all duration-300 focus:outline-none pr-12 ${
-                    errors.password
-                      ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                      : 'border-light hover:border-accent focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20'
-                  }`}
-                />
-                {/* Show/Hide Password Toggle */}
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary text-opacity-60 hover:text-opacity-100 transition-all duration-200"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? (
-                    <EyeOff size={20} />
-                  ) : (
-                    <Eye size={20} />
-                  )}
-                </button>
+            <div className="grid grid-cols-1 gap-5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#533638]/40 uppercase tracking-widest px-1">Full Identity</label>
+                <div className="relative group/input">
+                  <User className="absolute left-5 top-1/2 -translate-y-1/2 text-[#533638]/20 group-focus-within/input:text-[#533638] transition-colors" size={20} />
+                  <input
+                    type="text"
+                    name="fullName"
+                    placeholder="John Commander"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    className={`w-full pl-14 pr-6 py-4 bg-[#F5EDEC]/50 border-2 rounded-2xl text-[#533638] font-bold placeholder-[#533638]/20 focus:outline-none transition-all duration-300 ${
+                      errors.fullName ? 'border-red-400 focus:border-red-400' : 'border-transparent focus:border-[#F7B9C4] focus:bg-white'
+                    }`}
+                  />
+                </div>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-2 font-medium animate-fadeIn">
-                  {errors.password}
-                </p>
-              )}
-            </div>
 
-            {/* Confirm Password Input */}
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-semibold text-primary mb-2">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  name="confirmPassword"
-                  placeholder="Confirm your password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border-2 font-medium text-primary placeholder-primary placeholder-opacity-40 transition-all duration-300 focus:outline-none pr-12 ${
-                    errors.confirmPassword
-                      ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                      : 'border-light hover:border-accent focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20'
-                  }`}
-                />
-                {/* Show/Hide Confirm Password Toggle */}
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary text-opacity-60 hover:text-opacity-100 transition-all duration-200"
-                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff size={20} />
-                  ) : (
-                    <Eye size={20} />
-                  )}
-                </button>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#533638]/40 uppercase tracking-widest px-1">Email Terminal</label>
+                <div className="relative group/input">
+                  <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-[#533638]/20 group-focus-within/input:text-[#533638] transition-colors" size={20} />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="commander@pepta.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full pl-14 pr-6 py-4 bg-[#F5EDEC]/50 border-2 rounded-2xl text-[#533638] font-bold placeholder-[#533638]/20 focus:outline-none transition-all duration-300 ${
+                      errors.email ? 'border-red-400 focus:border-red-400' : 'border-transparent focus:border-[#F7B9C4] focus:bg-white'
+                    }`}
+                  />
+                </div>
               </div>
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-2 font-medium animate-fadeIn">
-                  {errors.confirmPassword}
-                </p>
-              )}
             </div>
 
-            {/* Create Account Button */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#533638]/40 uppercase tracking-widest px-1">Security Key</label>
+                <div className="relative group/input">
+                  <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#533638]/20 group-focus-within/input:text-[#533638] transition-colors" size={18} />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className={`w-full pl-12 pr-12 py-4 bg-[#F5EDEC]/50 border-2 rounded-2xl text-[#533638] font-bold text-sm placeholder-[#533638]/20 focus:outline-none transition-all duration-300 ${
+                      errors.password ? 'border-red-400 focus:border-red-400' : 'border-transparent focus:border-[#F7B9C4] focus:bg-white'
+                    }`}
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#533638]/20 hover:text-[#533638]">
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#533638]/40 uppercase tracking-widest px-1">Confirm Key</label>
+                <div className="relative group/input">
+                  <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#533638]/20 group-focus-within/input:text-[#533638] transition-colors" size={18} />
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={`w-full pl-12 pr-12 py-4 bg-[#F5EDEC]/50 border-2 rounded-2xl text-[#533638] font-bold text-sm placeholder-[#533638]/20 focus:outline-none transition-all duration-300 ${
+                      errors.confirmPassword ? 'border-red-400 focus:border-red-400' : 'border-transparent focus:border-[#F7B9C4] focus:bg-white'
+                    }`}
+                  />
+                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#533638]/20 hover:text-[#533638]">
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-primary text-lg font-bold py-3 mt-8 disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden"
+              className="w-full py-5 bg-[#533638] text-white rounded-3xl font-black text-sm flex items-center justify-center gap-3 hover:bg-[#F7B9C4] hover:text-[#533638] transition-all duration-500 shadow-xl shadow-[#533638]/10 active:scale-[0.98] disabled:opacity-50 mt-4"
             >
               {isLoading ? (
-                <span className="flex items-center justify-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Creating account...
-                </span>
+                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
               ) : (
-                'Create Account'
+                <>
+                  INITIALIZE ACCOUNT
+                  <ArrowRight size={18} />
+                </>
               )}
             </button>
           </form>
 
-          {/* Sign In Link */}
-          <div className="text-center mt-8 pt-6 border-t border-light border-opacity-50">
-            <p className="text-primary text-opacity-70">
-              Already have an account?{' '}
+          <div className="mt-10 pt-8 border-t border-[#533638]/5 text-center">
+            <p className="text-sm font-bold text-[#533638]/40">
+              Already in the system?{' '}
               <button
                 onClick={onNavigateToSignIn}
-                className="font-bold text-accent hover:text-primary transition-all duration-300 cursor-pointer"
+                className="text-[#533638] hover:text-[#F7B9C4] transition-colors border-b-2 border-[#F7B9C4]"
               >
-                Sign in
+                Sign In
               </button>
             </p>
           </div>
-
-          {/* Additional Info */}
-          <div className="mt-8 p-4 bg-light rounded-lg text-center">
-            <p className="text-sm text-primary text-opacity-60">
-              We'll send you a confirmation email to verify your account.
-            </p>
-          </div>
         </div>
 
-        {/* Demo Note */}
-        <div className="text-center mt-6 text-sm text-primary text-opacity-50">
-          <p>This is a demo registration page. No backend validation is performed.</p>
-        </div>
+        <button 
+          onClick={() => window.location.reload()}
+          className="mt-8 mx-auto flex items-center gap-2 text-[10px] font-black text-[#533638]/30 hover:text-[#533638] uppercase tracking-[0.2em] transition-all"
+        >
+          <ChevronLeft size={14} />
+          Return to Launchpad
+        </button>
       </div>
     </div>
   );

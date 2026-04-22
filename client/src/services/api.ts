@@ -1,7 +1,7 @@
 // src/services/api.ts
 // API service for connecting to the backend server
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
 /**
  * Fetch wrapper with error handling

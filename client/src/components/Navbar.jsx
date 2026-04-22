@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Bell, LayoutDashboard } from 'lucide-react';
+import { Menu, X, TrendingDown, LayoutDashboard } from 'lucide-react';
 
 export default function Navbar({ onGetStartedClick }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,12 +41,12 @@ export default function Navbar({ onGetStartedClick }) {
           }`}
         >
           {/* Logo/Brand */}
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 bg-[#533638] rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12 duration-300">
-              <Bell className="text-[#F7B9C4]" size={22} />
+          <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <div className="w-10 h-10 bg-[#533638] rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12 duration-300 shadow-lg shadow-[#533638]/20">
+              <TrendingDown className="text-[#F7B9C4]" size={22} />
             </div>
-            <span className="text-2xl font-['Outfit'] font-bold text-[#533638] tracking-tight">
-              PriceTracker
+            <span className="text-2xl font-['Outfit'] font-black text-[#533638] tracking-tighter">
+              PEPTA
             </span>
           </div>
 
@@ -56,10 +56,10 @@ export default function Navbar({ onGetStartedClick }) {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-[#533638]/70 hover:text-[#533638] transition-all duration-300 font-medium text-[15px] relative group"
+                className="text-[#533638]/70 hover:text-[#533638] transition-all duration-300 font-bold text-xs uppercase tracking-widest relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#533638] transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F7B9C4] transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
           </div>
@@ -68,10 +68,10 @@ export default function Navbar({ onGetStartedClick }) {
           <div className="flex items-center space-x-3">
             <button 
               onClick={handleSignInClick}
-              className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-[#533638] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-[#533638]/20 hover:-translate-y-0.5"
+              className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-[#533638] text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 hover:bg-[#F7B9C4] hover:text-[#533638] hover:shadow-lg hover:shadow-[#533638]/10 hover:-translate-y-0.5 active:scale-95"
             >
-              <LayoutDashboard size={18} />
-              Sign In
+              <LayoutDashboard size={16} />
+              COMMAND CENTER
             </button>
 
             {/* Mobile menu button */}
@@ -97,7 +97,7 @@ export default function Navbar({ onGetStartedClick }) {
               <a
                 key={item.name}
                 href={item.href}
-                className="block text-lg font-medium text-[#533638]/80 hover:text-[#533638] py-2"
+                className="block text-sm font-black text-[#533638]/80 hover:text-[#533638] py-2 uppercase tracking-widest"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
@@ -105,10 +105,10 @@ export default function Navbar({ onGetStartedClick }) {
             ))}
             <button 
               onClick={handleSignInClick}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#533638] text-white rounded-2xl font-bold"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[#533638] text-white rounded-2xl font-black text-xs uppercase tracking-widest"
             >
-              <LayoutDashboard size={20} />
-              Sign In
+              <LayoutDashboard size={18} />
+              COMMAND CENTER
             </button>
           </div>
         </div>
