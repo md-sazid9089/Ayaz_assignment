@@ -2,6 +2,9 @@
 // Get all products and add new product endpoint
 
 import { NextRequest } from "next/server";
+
+export const maxDuration = 60;
+
 import { prisma } from "@/lib/prisma";
 import { verifyAuth } from "@/lib/auth";
 import { scrapeProductData } from "@/lib/firecrawl";

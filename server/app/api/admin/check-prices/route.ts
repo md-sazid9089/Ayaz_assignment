@@ -3,6 +3,9 @@
 // In production, this should be protected with API key or admin authentication
 
 import { NextRequest } from "next/server";
+
+export const maxDuration = 60;
+
 import { checkAllProductPrices, getPriceCheckStats } from "@/lib/priceChecker";
 import { successResponse, errorResponse } from "@/utils/response";
 
