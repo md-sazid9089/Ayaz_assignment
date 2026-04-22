@@ -1,87 +1,89 @@
-import { Heart } from 'lucide-react';
+import { Bell, Twitter, Github, Linkedin, Mail, Heart } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const footerLinks = [
+    {
+      title: 'Product',
+      links: [
+        { name: 'Features', href: '#features' },
+        { name: 'Pricing', href: '#' },
+        { name: 'Trackers', href: '#' },
+        { name: 'Chrome Extension', href: '#' },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { name: 'About Us', href: '#' },
+        { name: 'Careers', href: '#' },
+        { name: 'Blog', href: '#' },
+        { name: 'Contact', href: '#' },
+      ],
+    },
+    {
+      title: 'Legal',
+      links: [
+        { name: 'Privacy Policy', href: '#' },
+        { name: 'Terms of Service', href: '#' },
+        { name: 'Cookie Policy', href: '#' },
+      ],
+    },
+  ];
+
   return (
-    <footer className="bg-primary text-white py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <h3 className="text-2xl font-bold mb-2">PriceTracker</h3>
-            <p className="text-accent text-opacity-70">
-              Smart price tracking for smarter shopping
+    <footer className="bg-[#533638] pt-24 pb-12 text-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      
+      <div className="section-container relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
+          {/* Brand Column */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 bg-[#F7B9C4] rounded-2xl flex items-center justify-center">
+                <Bell className="text-[#533638]" size={24} />
+              </div>
+              <span className="text-3xl font-['Outfit'] font-bold tracking-tight text-white">PriceTracker</span>
+            </div>
+            <p className="text-white/60 text-lg mb-8 max-w-sm leading-relaxed">
+              The world's most advanced price tracking engine. Helping shoppers save millions by monitoring prices across the global web.
             </p>
+            <div className="flex gap-4">
+              {[Twitter, Github, Linkedin, Mail].map((Icon, i) => (
+                <a key={i} href="#" className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center hover:bg-[#F7B9C4] hover:text-[#533638] transition-all duration-300">
+                  <Icon size={20} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#home" className="hover:text-accent transition-colors duration-300">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-accent transition-colors duration-300">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="hover:text-accent transition-colors duration-300">
-                  How It Works
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#about" className="hover:text-accent transition-colors duration-300">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-accent transition-colors duration-300">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-accent transition-colors duration-300">
-                  Privacy Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold mb-4">Get in Touch</h4>
-            <p className="text-accent text-opacity-70 mb-2">
-              Email: hello@pricetracker.com
-            </p>
-            <p className="text-accent text-opacity-70">
-              Support available 24/7
-            </p>
-          </div>
+          {/* Links Columns */}
+          {footerLinks.map((column, i) => (
+            <div key={i}>
+              <h4 className="text-xl font-bold mb-8 text-[#F7B9C4]">{column.title}</h4>
+              <ul className="space-y-4">
+                {column.links.map((link, j) => (
+                  <li key={j}>
+                    <a href={link.href} className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F7B9C4]/0 group-hover:bg-[#F7B9C4] transition-all"></span>
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-accent border-opacity-20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-accent text-opacity-70 text-center md:text-left mb-4 md:mb-0">
-              &copy; {currentYear} Product Price Tracking System. All rights reserved.
-            </p>
-            <div className="flex items-center text-accent">
-              Made with
-              <Heart size={18} className="mx-2 fill-accent" />
-              for smart shoppers
-            </div>
+        {/* Bottom Bar */}
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-white/40 font-medium text-center md:text-left">
+            &copy; {currentYear} PriceTracker. All rights reserved.
+          </p>
+          <div className="flex items-center gap-2 text-white/40 font-medium">
+            Made with <Heart size={16} className="text-[#F7B9C4] fill-[#F7B9C4]" /> by <a href="#" className="text-white hover:text-[#F7B9C4] transition-colors">Ayaz</a>
           </div>
         </div>
       </div>

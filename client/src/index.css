@@ -2,16 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: 83, 54, 56;
+  --color-accent: 247, 185, 196;
+  --color-light: 245, 237, 236;
+}
+
+@layer base {
+  body {
+    @apply font-['Inter'] text-[#533638] bg-[#F5EDEC] selection:bg-[#F7B9C4] selection:text-[#533638];
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Outfit'] tracking-tight;
+  }
+}
+
 @layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
   .btn-primary {
-    @apply px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply px-8 py-3.5 bg-[#533638] text-white rounded-2xl font-bold transition-all duration-500 
+           hover:shadow-[0_10px_25px_-5px_rgba(83,54,56,0.3)] hover:-translate-y-0.5 active:scale-95
+           flex items-center justify-center gap-2;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-accent text-primary rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 border-2 border-accent;
+    @apply px-8 py-3.5 bg-transparent text-[#533638] border-2 border-[#533638]/20 rounded-2xl font-bold 
+           transition-all duration-500 hover:bg-[#533638]/5 hover:border-[#533638] active:scale-95
+           flex items-center justify-center gap-2;
   }
 
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
+  .btn-accent {
+    @apply px-8 py-3.5 bg-[#F7B9C4] text-[#533638] rounded-2xl font-bold transition-all duration-500 
+           hover:shadow-[0_10px_25px_-5px_rgba(247,185,196,0.5)] hover:-translate-y-0.5 active:scale-95
+           flex items-center justify-center gap-2;
   }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
+
+  .card-premium {
+    @apply bg-white rounded-[2.5rem] p-10 transition-all duration-500 
+           hover:shadow-[0_30px_60px_-15px_rgba(83,54,56,0.1)] hover:-translate-y-2
+           border border-[#533638]/5;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-[#533638] to-[#533638]/60;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#F5EDEC];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#533638]/20 rounded-full border-2 border-[#F5EDEC] hover:bg-[#533638]/40 transition-colors;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
 }
