@@ -62,7 +62,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse request body
-    const body = await request.json();
+    const body: any = await request.json();
+
 
     // Validate request
     const validation = validateAddProduct(body);

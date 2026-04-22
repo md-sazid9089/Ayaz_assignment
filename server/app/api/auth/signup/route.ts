@@ -15,7 +15,8 @@ import { successResponse, errorResponse, validationErrorResponse, createdRespons
 export async function POST(request: NextRequest) {
   try {
     // Parse request body
-    const body = await request.json();
+    const body: any = await request.json();
+
 
     // Validate request
     const validation = validateSignUp(body);
