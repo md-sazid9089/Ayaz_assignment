@@ -102,17 +102,18 @@ export async function GET(
             current: priceHistory[0]?.price || 0,
             oldest: priceHistory[priceHistory.length - 1]?.price || 0,
             percentChange:
-              priceHistory.length > 1
+              priceHistory.length > 1 && priceHistory[priceHistory.length - 1]?.price
                 ? parseFloat(
                     (
-                      ((priceHistory[0].price - priceHistory[priceHistory.length - 1].price) /
-                        priceHistory[priceHistory.length - 1].price) *
+                      ((priceHistory[0]!.price - priceHistory[priceHistory.length - 1]!.price) /
+                        priceHistory[priceHistory.length - 1]!.price) *
                       100
                     ).toFixed(2)
                   )
                 : 0,
           },
         },
+
       },
       "Price history retrieved successfully"
     );
