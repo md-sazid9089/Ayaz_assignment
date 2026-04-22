@@ -70,6 +70,7 @@ export async function scrapeProductData(productUrl: string): Promise<ScrapedProd
     const imageUrl = extractImageUrl(data);
 
     return {
+
       title,
       price,
       currency: "USD",
